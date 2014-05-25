@@ -26,9 +26,9 @@ util.AddNetworkString( "announcementSent" )
 
 //Toggle debug on/off (prints messages to console)
 hook.Add( "PlayerSay", "announcementSent", function( ply, text )
-    //if ply:GetUserGroup() == "_superadmin" or ply:GetUserGroup() == "superadmin" or ply:GetUserGroup() == "_mcs" then
+    if ply:GetUserGroup() == "superadmin" then
         local command = string.Explode( " ", text )
-        if string.lower(command[1]) == "!announce" then
+        if string.lower(command[1]) == ANNOUNCEMENT_COMMAND then
             print("Command worked")
             local playerNick = ply:Nick()
             local playerSteamID = ply:SteamID()
@@ -48,5 +48,5 @@ hook.Add( "PlayerSay", "announcementSent", function( ply, text )
                 end
             end
 		end
-	//end
+	end
 end )
