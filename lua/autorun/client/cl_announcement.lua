@@ -3,8 +3,9 @@ net.Receive( "announcementSent", function()
     local announcementMessageContent = net.ReadString()
     local backgroundEnabled = net.ReadInt( 8 )
     local timeInSeconds = net.ReadInt( 8 )
+    local printInChat = net.ReadInt( 8 )
     print(announcementMessage)
-    drawAnnouncement( playerNick, announcementMessageContent, backgroundEnabled, timeInSeconds )
+    drawAnnouncement( playerNick, announcementMessageContent, backgroundEnabled, timeInSeconds, printInChat )
 end)
 
 surface.CreateFont( "playerNickFont", {
@@ -20,7 +21,7 @@ surface.CreateFont( "announcementMessageFont", {
 	antialias = true,
 } )
 
-function drawAnnouncement( playerNick, announcementMessageContent, backgroundEnabled, timeInSeconds )
+function drawAnnouncement( playerNick, announcementMessageContent, backgroundEnabled, timeInSeconds, printInChat )
     local announcementBackgroundPanel = vgui.Create( "DPanel" )
     announcementBackgroundPanel:SetSize( ScrW(), 150 )
     announcementBackgroundPanel:SetPos( 0, -200 )
@@ -55,19 +56,10 @@ function drawAnnouncement( playerNick, announcementMessageContent, backgroundEna
     announcementMessageLabel:SetTextColor( Color( 255, 255, 255, 255 ) )
     announcementMessageLabel:MoveTo( (ScrW()/2)-(announcementMessageX/2), 15+announcementNameY+15, 0.1, 0.3, 1 )
     
-    /*
-    local announcementMessageLabel = vgui.Create( "DLabel", announcementBackgroundPanel )
-    announcementMessageLabel.Paint = function()
-        surface.SetDrawColor( 255, 0, 0, 255 ) 
-        surface.DrawRect( 0, 0, announcementMessageLabel:GetWide(), announcementMessageLabel:GetTall() )    announcementMessageLabel:SetSize( (ScrW()*0.65), announcementBackgroundY-(announcementNameY+40) )
+    if printInChat == 1 then
+    	hat.AddText( Color( 100, 100, 255 ), " : ", announcementMessageContent )
     end
-    announcementMessageLabel:SetFont( "announcementMessageFont" )
-    announcementMessageLabel:SetText( announcementMessageContent )
-    announcementMessageLabel:SetTextColor( Color( 255, 255, 255, 255 ) )
-    local announcementMessageX, announcementMessageY = announcementMessageLabel:GetSize()
-    announcementMessageLabel:SetPos( (ScrW()/2)-(announcementMessageX/2), (0-announcementMessageY) )
-    announcementMessageLabel:MoveTo( (ScrW()/2)-(announcementMessageX/2), (20+announcementNameY), 0.1, 0.3, 1 )
-    */
+    
     timer.Create( "removeAnnouncement", timeInSeconds+0.3, 1, function()
         announcementNameLabel:MoveTo( (ScrW()/2)-(announcementNameX/2), (0-50), 0.1, 0, 1 )
         announcementMessageLabel:MoveTo( (ScrW()/2)-(announcementMessageX/2), (0-announcementMessageY), 0.1, 0, 1 )
@@ -78,5 +70,7 @@ function drawAnnouncement( playerNick, announcementMessageContent, backgroundEna
             announcementMessageLabel:Remove()
         end)
     end)
+    
+    
     
 end
