@@ -2,7 +2,7 @@
 
 //Do you want the message to also appear in the players chat box?
 //	true / false
-local PRINT_IN_CHAT = true
+local PRINT_IN_CHAT = 1
 
 //Do you want the semi-transparent background to show up under the announcement?
 //  1 = true, 0 = false
@@ -36,12 +36,8 @@ hook.Add( "PlayerSay", "announcementSent", function( ply, text )
                 net.WriteString( announcementMessage )
                 net.WriteInt( BACKGROUND_ENABLED, 8 )
                 net.WriteInt( timeInSeconds, 8 )
+                net.WriteInt( PRINT_IN_CHAT, 8 )
             net.Broadcast()
-            if PRINT_IN_CHAT == true then
-                for k, v in pairs( player.GetAll() ) do
-                    v:ChatPrint( TOP_MESSAGE_TEXT .. BOTTOM_MESSAGE_TEXT )
-                end
-            end
 		end
 	end
 end )
