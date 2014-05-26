@@ -3,7 +3,6 @@ net.Receive( "announcementSent", function()
     local announcementMessageContent = net.ReadString()
     local backgroundEnabled = net.ReadInt( 8 )
     local timeInSeconds = net.ReadInt( 8 )
-    local printInChat = net.ReadInt( 8 )
     print(announcementMessage)
     drawAnnouncement( playerNick, announcementMessageContent, backgroundEnabled, timeInSeconds, printInChat )
 end)
@@ -55,11 +54,7 @@ function drawAnnouncement( playerNick, announcementMessageContent, backgroundEna
     announcementMessageLabel:SetPos( (ScrW()/2)-(announcementMessageX/2), (0-50) )
     announcementMessageLabel:SetTextColor( Color( 255, 255, 255, 255 ) )
     announcementMessageLabel:MoveTo( (ScrW()/2)-(announcementMessageX/2), 15+announcementNameY+15, 0.1, 0.3, 1 )
-    
-    if printInChat == 1 then
-    	hat.AddText( Color( 100, 100, 255 ), " : ", announcementMessageContent )
-    end
-    
+
     timer.Create( "removeAnnouncement", timeInSeconds+0.3, 1, function()
         announcementNameLabel:MoveTo( (ScrW()/2)-(announcementNameX/2), (0-50), 0.1, 0, 1 )
         announcementMessageLabel:MoveTo( (ScrW()/2)-(announcementMessageX/2), (0-announcementMessageY), 0.1, 0, 1 )
