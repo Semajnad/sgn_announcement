@@ -24,12 +24,11 @@ hook.Add( "PlayerSay", "announcementSent", function( ply, text )
     if ply:GetUserGroup() == "superadmin" then
         local command = string.Explode( " ", text )
         if string.lower(command[1]) == ANNOUNCEMENT_COMMAND then
-            print("Command worked")
             local playerNick = ply:Nick()
             local playerSteamID = ply:SteamID()
             local timeInSeconds = tonumber(command[2])
             local announcementMessage = string.gsub( text, ANNOUNCEMENT_COMMAND .. " " .. command[2] .. " ","")
-            print(announcementMessage)
+            print( announcementMessage )
             print( playerNick .. " : " .. announcementMessage )
             net.Start( "announcementSent" )
                 net.WriteString( playerNick )
