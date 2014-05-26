@@ -2,12 +2,17 @@
 
 //Do you want the message to also appear in the players chat box?
 //	true / false
-local PRINT_IN_CHAT = 1
+local PRINT_IN_CHAT = true
+
+//What message to do you want to display to the connecting user?
+//  Change [server_name] to your servers name, or re-arrange the string to suit your needs! If you need help, just let me know!
+//  $playername = players garry's mod nickname / display name
+//  $playersteamid = players steam ID
+local TITLE_TEXT = "Staff Announcement"
 
 //Do you want the semi-transparent background to show up under the announcement?
 //  1 = true, 0 = false
 local BACKGROUND_ENABLED = 0
-
 //What command you want to use to start an announcement?
 //No spaces...
 local ANNOUNCEMENT_COMMAND = "!announce"
@@ -36,8 +41,12 @@ hook.Add( "PlayerSay", "announcementSent", function( ply, text )
                 net.WriteString( announcementMessage )
                 net.WriteInt( BACKGROUND_ENABLED, 8 )
                 net.WriteInt( timeInSeconds, 8 )
-                net.WriteInt( PRINT_IN_CHAT, 8 )
             net.Broadcast()
+            if PRINT_IN_CHAT == true then
+                for k, v in pairs( player.GetAll() ) do
+                    v:ChatPrint( playerNick .. " : " .. announcementMessage )
+                end
+            end
 		end
 	end
 end )
