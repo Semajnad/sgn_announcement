@@ -7,4 +7,6 @@ To install, simply place the addon folder inside the zip file in your servers ga
 
 To customise this add-on, simple edit the customsation options at the top of sv_init.lua.
 
+The command to use this addon is '!announce [seconds-to-display] [announcement-message]'
+
 For help and support, feel free to add me on Steam at http://steamcommunity.com/id/semajnad
